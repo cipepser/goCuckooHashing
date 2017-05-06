@@ -1,4 +1,4 @@
-package main
+package CuckooHashing
 
 import (
 	"crypto/md5"
@@ -100,7 +100,7 @@ func (c *BucketizedCuckoo) delete(key int64) {
 	return
 }
 
-func main() {
+func BucketizedCuckoo() {
 	c := NewBucketizedCuckoo()
 
 	// insert the keys.

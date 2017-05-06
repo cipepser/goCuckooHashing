@@ -1,4 +1,4 @@
-package main
+package CuckooHashing
 
 import (
 	"crypto/md5"
@@ -81,7 +81,7 @@ func (c *Cuckoo) delete(key int64) {
 	return
 }
 
-func main() {
+func CuckooHashing() {
 	c := NewCuckoo()
 
 	// insert the keys.
@@ -100,3 +100,4 @@ func main() {
 	c.delete(3)
 	fmt.Println("after:  ", *c) // after:   {[0 8 6 0 4 0 9 0 5 7] [0 1 0 0 0 2 0 0 0 0]}
 }
+
