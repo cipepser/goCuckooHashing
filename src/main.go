@@ -1,7 +1,7 @@
 package main
 
 import (
-	"CuckooHashing"
+	"github.com/cipepser/goCuckooHashing/src/goCuckooHashing"
 )
 
 func main () {

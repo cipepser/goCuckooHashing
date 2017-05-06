@@ -7,11 +7,6 @@ import (
 	"math/big"
 )
 
-const (
-	N       int64 = 10 // テーブルの大きさ
-	MAXLOOP int   = 100
-)
-
 func hash(key int64) (h1, h2 int64) {
 	hasher := md5.New()
 	hasher.Write([]byte(string(key)))
