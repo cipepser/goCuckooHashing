@@ -1,4 +1,4 @@
-package CuckooHashing
+package goCuckooHashing
 
 import (
 	"crypto/md5"
