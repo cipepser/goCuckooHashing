@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/cipepser/goCuckooHashing/src/goCuckooHashing"
+	"./goCuckooHashing"
 )
 
 func main () {
-	CuckooHashing()
-	BucketizedCuckooHashing()
+	goCuckooHashing.CuckooHashing()
+	goCuckooHashing.BucketizedCuckooHashing()
 }

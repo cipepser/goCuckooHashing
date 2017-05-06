@@ -1,25 +1,25 @@
 package goCuckooHashing
 
 import (
-	"crypto/md5"
-	"encoding/hex"
+	// "crypto/md5"
+	// "encoding/hex"
 	"fmt"
-	"math/big"
+	// "math/big"
 )
 
-func hash(key int64) (h1, h2 int64) {
-	hasher := md5.New()
-	hasher.Write([]byte(string(key)))
-
-	h := hex.EncodeToString(hasher.Sum(nil))
-
-	h1_t, _ := new(big.Int).SetString(h[:int(len(h)/2)], 16)
-	h2_t, _ := new(big.Int).SetString(h[int(len(h)/2):], 16)
-	h1 = h1_t.Rem(h1_t, big.NewInt(N)).Int64()
-	h2 = h2_t.Rem(h2_t, big.NewInt(N)).Int64()
-
-	return h1, h2
-}
+// func hash(key int64) (h1, h2 int64) {
+// 	hasher := md5.New()
+// 	hasher.Write([]byte(string(key)))
+// 
+// 	h := hex.EncodeToString(hasher.Sum(nil))
+// 
+// 	h1_t, _ := new(big.Int).SetString(h[:int(len(h)/2)], 16)
+// 	h2_t, _ := new(big.Int).SetString(h[int(len(h)/2):], 16)
+// 	h1 = h1_t.Rem(h1_t, big.NewInt(N)).Int64()
+// 	h2 = h2_t.Rem(h2_t, big.NewInt(N)).Int64()
+// 
+// 	return h1, h2
+// }
 
 type BucketizedCuckoo struct {
 	T1, T2 [N][BCKSIZE]int64
@@ -94,7 +94,7 @@ func (c *BucketizedCuckoo) delete(key int64) {
 	return
 }
 
-func BucketizedCuckoo() {
+func BucketizedCuckooHashing() {
 	c := NewBucketizedCuckoo()
 
 	// insert the keys.
