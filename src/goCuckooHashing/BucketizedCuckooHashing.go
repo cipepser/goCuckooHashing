@@ -81,9 +81,9 @@ func BucketizedCuckooHashing() {
 	c := NewBucketizedCuckoo()
 
 	// insert the keys.
-	cnt := 0
 	x := []int64{1, 2, 3, 4, 5, 6, 7, 8, 9}
 	for _, key := range x {
+		cnt := 0
 		c.insert(key, cnt)
 	}
 
