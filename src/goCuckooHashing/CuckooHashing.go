@@ -59,7 +59,7 @@ func (c *Cuckoo) Insert(key int64, cnt int) {
 		}
 		cnt++
 	}
-	panic("fail to insert. you must reconstruct the Table...")
+	// panic("fail to insert. you must reconstruct the Table...")
 }
 
 func (c *Cuckoo) Delete(key int64) {

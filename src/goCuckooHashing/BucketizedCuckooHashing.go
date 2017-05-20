@@ -1,9 +1,5 @@
 package goCuckooHashing
 
-import (
-	"fmt"
-)
-
 type BucketizedCuckoo struct {
 	T1, T2 [N][BCKSIZE]int64
 }
@@ -12,9 +8,9 @@ func NewBucketizedCuckoo() *BucketizedCuckoo {
 	return new(BucketizedCuckoo)
 }
 
-func (c *BucketizedCuckoo) lookup(key int64) bool {
+func (c *BucketizedCuckoo) Lookup(key int64) bool {
 	h1, h2 := hash(key)
-	
+
 	for _, bucket := range c.T1[h1] {
 		if bucket == key {
 			return true
@@ -26,11 +22,11 @@ func (c *BucketizedCuckoo) lookup(key int64) bool {
 			return true
 		}
 	}
-	
+
 	return false
 }
 
-func (c *BucketizedCuckoo) insert(key int64, cnt int) {
+func (c *BucketizedCuckoo) Insert(key int64, cnt int) {
 	for cnt < MAXLOOP {
 		h1, h2 := hash(key)
 		switch cnt % 2 {
@@ -39,7 +35,7 @@ func (c *BucketizedCuckoo) insert(key int64, cnt int) {
 				if bucket == 0 {
 					c.T1[h1][i] = key
 					return
-				} else if i == BCKSIZE - 1 {
+				} else if i == BCKSIZE-1 {
 					key, c.T1[h1][i] = c.T1[h1][i], key
 				}
 			}
@@ -49,17 +45,16 @@ func (c *BucketizedCuckoo) insert(key int64, cnt int) {
 				if bucket == 0 {
 					c.T2[h2][i] = key
 					return
-				} else if i == BCKSIZE - 1 {
+				} else if i == BCKSIZE-1 {
 					key, c.T2[h2][i] = c.T2[h2][i], key
 				}
 			}
 		}
 		cnt++
 	}
-	panic("fail to insert. you must reconstruct the Table...")
 }
 
-func (c *BucketizedCuckoo) delete(key int64) {
+func (c *BucketizedCuckoo) Delete(key int64) {
 	h1, h2 := hash(key)
 
 	for i, bucket := range c.T1[h1] {
@@ -73,26 +68,6 @@ func (c *BucketizedCuckoo) delete(key int64) {
 			c.T2[h2][i] = 0
 		}
 	}
-	
+
 	return
-}
-
-func BucketizedCuckooHashing() {
-	c := NewBucketizedCuckoo()
-
-	// insert the keys.
-	x := []int64{1, 2, 3, 4, 5, 6, 7, 8, 9}
-	for _, key := range x {
-		cnt := 0
-		c.insert(key, cnt)
-	}
-
-	// look up for the key "1" and "10".
-	fmt.Println("key:1  ", c.lookup(1))  // key:1   true
-	fmt.Println("key:10 ", c.lookup(10)) // key:10  false
-
-	// delete the key "3".
-	fmt.Println("before: ", *c) // before:  {[0 8 6 0 4 0 9 0 5 7] [0 1 0 0 0 2 0 0 3 0]}
-	c.delete(3)
-	fmt.Println("after:  ", *c) // after:   {[0 8 6 0 4 0 9 0 5 7] [0 1 0 0 0 2 0 0 0 0]}
 }
