@@ -2,18 +2,23 @@ package goCuckooHashing
 
 import (
 	"crypto/md5"
+	"encoding/binary"
 	"encoding/hex"
 	"math/big"
 )
 
 func hash(key int64) (h1, h2 int64) {
 	hasher := md5.New()
-	hasher.Write([]byte(string(key)))
+
+	b := make([]byte, 8)
+	binary.LittleEndian.PutUint64(b, uint64(key))
+	hasher.Write(b)
 
 	h := hex.EncodeToString(hasher.Sum(nil))
 
 	t1, _ := new(big.Int).SetString(h[:int(len(h)/2)], 16)
 	t2, _ := new(big.Int).SetString(h[int(len(h)/2):], 16)
+
 	h1 = t1.Rem(t1, big.NewInt(N)).Int64()
 	h2 = t2.Rem(t2, big.NewInt(N)).Int64()
 
@@ -54,12 +59,10 @@ func (c *Cuckoo) Insert(key int64, cnt int) {
 				c.T2[h2] = key
 				return
 			}
-
 			key, c.T2[h2] = c.T2[h2], key
 		}
 		cnt++
 	}
-	// panic("fail to insert. you must reconstruct the Table...")
 }
 
 func (c *Cuckoo) Delete(key int64) {
